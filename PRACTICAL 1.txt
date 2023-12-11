@@ -1,0 +1,50 @@
+PRACTICAL 1:  •	Creating project with virtual environment.
+mkdir flask_todo_app
+cd flask_todo_app
+python -m venv venv
+
+•	Activating it.
+venv\Scripts\activate
+venv\Scripts\activate.bat
+
+•	Installing flask
+pip install Flask# pip install Flask
+# pip install request
+from flask import Flask, request, jsonify
+
+app = Flask(_name_)
+
+todos = []
+
+@app.get("/todos")
+def get_todos():
+        return todos              
+
+@app.post("/todos")   
+def create_todo():
+     data = request.get_json()
+     data['id'] = len(todos) + 1
+     todos.append(data)
+     return data
+
+@app.route("/todos/<int:id>", methods=["DELETE"])
+def delete_todo(id):
+    global todos  
+
+    for todo in todos:
+        if todo["id"] == id:
+            todos.remove(todo)
+            return jsonify({"message": "Todo deleted successfully"}), 200
+    return jsonify({"message": "Todo not found"}), 404
+ 
+@app.put("/todos/<int:id>")
+def update_todo(id):
+    for todo in todos:
+        if todo['id'] == id:
+            updated_todo = request.json              todo.update(updated_todo)
+            return jsonify({"message": "Todo updated successfully", "todo": todo}), 200
+
+    return jsonify({"message": "Todo not found"}), 404
+
+if _name_ == '_main_':
+    app.run(debug=True)

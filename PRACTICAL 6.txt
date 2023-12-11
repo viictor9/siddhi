@@ -1,0 +1,16 @@
+PRACTICAL 6: Install VirtualBox
+Install Vagrant 
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/bionic64" 
+  
+end
+Vagrant.file:
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/bionic64"  # Choose the base box image
+  config.vm.network "private_network", type: "dhcp"  # Create a private network
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = 1024  # Set the VM memory to 1GB
+    vb.cpus = 2      # Set the number of CPU cores to 2
+  end
+end

@@ -1,0 +1,34 @@
+PRACTICAL 3: pip install pikaSender.py
+import pika
+# Establish a connection to RabbitMQ server
+connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+channel = connection.channel()
+
+# Declare a queue named 'hello'
+channel.queue_declare(queue='boss')
+
+# Send a message to the 'hello' queue
+message = "Hello, Pritam"
+channel.basic_publish(exchange='', routing_key='boss', body=message)
+
+print(f" [x] Sent '{message}'")
+
+# Close the connection
+connection.close()
+Receiver.py:
+import pika
+def callback(ch, method, properties, body):
+    print(f" [x] Received {body}")
+# Establish a connection to RabbitMQ server
+connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+channel = connection.channel()
+
+# Declare the same queue 'hello' as the producer
+channel.queue_declare(queue='boss')
+
+# Set up a callback function to handle incoming messages
+channel.basic_consume(
+    queue='boss', on_message_callback=callback, auto_ack=True)
+
+print(' [*] Waiting for messages. To exit, press Ctrl+C')
+channel.start_consuming()

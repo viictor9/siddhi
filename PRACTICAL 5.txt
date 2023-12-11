@@ -1,0 +1,23 @@
+PRACTICAL 5: App.py:
+
+from flask import Flask
+
+app = Flask(_name_)
+
+@app.route('/')
+def hello_world():
+    return 'Hello SID!!! from Flask!\n'
+
+if _name_ == '_main_':
+    app.run(host='0.0.0.0', port=5000)Server.js:
+const express = require('express');
+const app = express();
+const port = 3000;
+
+app.get('/', (req, res) => {
+  res.send('Hello SID!!! from Express.js!\n');
+});
+
+app.listen(port, () => {
+  console.log(Express app listening on port ${port});
+});
